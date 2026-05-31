@@ -1,6 +1,6 @@
 # CMC Crypto Skill Hub Guide
 
-This repository contains the agent-facing guide for using CMC Crypto Skill Hub through MCP.
+This repository contains the agent-facing skill guide for using CMC Crypto Skill Hub through MCP.
 
 The guide teaches an agent how to:
 
@@ -11,26 +11,57 @@ The guide teaches an agent how to:
 - handle blocked, partial, stale, and failed tool results;
 - render concise Markdown research summaries for crypto market questions.
 
+## Repository Layout
+
+The installable skill is in the `cmc-crypto-skill-hub/` subdirectory:
+
+```text
+cmc-crypto-skill-hub/
+  SKILL.md
+  agents/openai.yaml
+```
+
+The directory name matches the `name` field in `SKILL.md`.
+
 ## Compatibility
 
-This guide is compatible with both Codex and Claude Code skill layouts.
+This guide is compatible with Codex and Claude Code skill layouts when installed as the `cmc-crypto-skill-hub` skill directory.
 
 | Host | Install path |
 |---|---|
 | Codex | `${CODEX_HOME:-$HOME/.codex}/skills/cmc-crypto-skill-hub/` |
 | Claude Code | `$HOME/.claude/skills/cmc-crypto-skill-hub/` |
 
-Install only these files into the skill folder:
+Install the contents of this directory into the skill folder:
 
 ```text
-SKILL.md
-agents/openai.yaml
+cmc-crypto-skill-hub/
 ```
 
-Do not rename the skill folder to the repository name. The installed folder should be:
+The installed folder must remain:
 
 ```text
 cmc-crypto-skill-hub
+```
+
+Do not install the repository root as the skill. The repository root contains project documentation and is not the skill directory.
+
+`agents/openai.yaml` provides Codex UI and MCP dependency metadata. Claude Code loads the skill from `SKILL.md`; if Claude Code does not use `agents/openai.yaml`, configure the `crypto-skill-hub` MCP server separately in Claude Code.
+
+## Codex Skill Installer
+
+Use the GitHub directory URL:
+
+```text
+$skill-installer install https://github.com/XavenY/cmc-crypto-skill-hub-guide/tree/main/cmc-crypto-skill-hub
+```
+
+Equivalent explicit installer arguments:
+
+```bash
+python install-skill-from-github.py \
+  --repo XavenY/cmc-crypto-skill-hub-guide \
+  --path cmc-crypto-skill-hub
 ```
 
 ## Send To Agent
@@ -38,24 +69,24 @@ cmc-crypto-skill-hub
 Copy the prompt below into Codex, Claude Code, or another local coding agent:
 
 ```text
-Install the CMC Crypto Skill Hub guide from https://github.com/XavenY/cmc-crypto-skill-hub-guide.
+Install the CMC Crypto Skill Hub guide from https://github.com/XavenY/cmc-crypto-skill-hub-guide/tree/main/cmc-crypto-skill-hub.
 
-Use the repository as an agent-facing skill guide, not as an application repo.
+Use the `cmc-crypto-skill-hub/` directory as the skill source.
 
 Steps:
 
 1. Clone the repository into a temporary directory.
-2. Verify that `SKILL.md` exists at the repository root and that its frontmatter name is `cmc-crypto-skill-hub`.
-3. Install the guide as folder `cmc-crypto-skill-hub`, not as `cmc-crypto-skill-hub-guide`.
+2. Verify that `cmc-crypto-skill-hub/SKILL.md` exists and that its frontmatter name is `cmc-crypto-skill-hub`.
+3. Install `cmc-crypto-skill-hub/` as folder `cmc-crypto-skill-hub`.
 4. If you are running as Codex, install to `${CODEX_HOME:-$HOME/.codex}/skills/cmc-crypto-skill-hub/`.
 5. If you are running as Claude Code, install to `$HOME/.claude/skills/cmc-crypto-skill-hub/`.
 6. If both `$HOME/.codex` and `$HOME/.claude` exist, install to both locations.
-7. Copy only `SKILL.md` and `agents/openai.yaml`, preserving the `agents/` subdirectory.
+7. Copy only the contents of `cmc-crypto-skill-hub/`, preserving the `agents/` subdirectory.
 8. If an existing `cmc-crypto-skill-hub` folder is present, move it to a timestamped backup before installing.
-9. Do not change the content of `SKILL.md`.
+9. Do not install the repository root as the skill.
 10. After installation, report the installed path or paths and remind me to restart the host agent so it can load the guide.
 
-Use shell commands where appropriate. Stop and explain the error if the repository cannot be cloned or the expected files are missing.
+Use shell commands where appropriate. Stop and explain the error if the repository cannot be cloned or the expected skill directory is missing.
 ```
 
 ## Manual Install
@@ -70,9 +101,9 @@ if [ -e "$install_dir" ]; then
   mv "$install_dir" "${install_dir}.bak.$(date +%Y%m%d%H%M%S)"
 fi
 mkdir -p "$install_dir"
-cp "$tmp_dir/SKILL.md" "$install_dir/SKILL.md"
+cp "$tmp_dir/cmc-crypto-skill-hub/SKILL.md" "$install_dir/SKILL.md"
 mkdir -p "$install_dir/agents"
-cp "$tmp_dir/agents/openai.yaml" "$install_dir/agents/openai.yaml"
+cp "$tmp_dir/cmc-crypto-skill-hub/agents/openai.yaml" "$install_dir/agents/openai.yaml"
 ```
 
 For Claude Code:
@@ -85,7 +116,7 @@ if [ -e "$install_dir" ]; then
   mv "$install_dir" "${install_dir}.bak.$(date +%Y%m%d%H%M%S)"
 fi
 mkdir -p "$install_dir"
-cp "$tmp_dir/SKILL.md" "$install_dir/SKILL.md"
+cp "$tmp_dir/cmc-crypto-skill-hub/SKILL.md" "$install_dir/SKILL.md"
 mkdir -p "$install_dir/agents"
-cp "$tmp_dir/agents/openai.yaml" "$install_dir/agents/openai.yaml"
+cp "$tmp_dir/cmc-crypto-skill-hub/agents/openai.yaml" "$install_dir/agents/openai.yaml"
 ```
