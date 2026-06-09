@@ -18,7 +18,12 @@ The installable skill is in the `cmc-crypto-skill-hub/` subdirectory:
 ```text
 cmc-crypto-skill-hub/
   SKILL.md
-  agents/openai.yaml
+  reference/
+    template-overview.md
+    template-macro.md
+    template-scanner.md
+    template-comparison.md
+    template-attribution.md
 ```
 
 The directory name matches the `name` field in `SKILL.md`.
@@ -46,7 +51,7 @@ cmc-crypto-skill-hub
 
 Do not install the repository root as the skill. The repository root contains project documentation and is not the skill directory.
 
-`agents/openai.yaml` provides Codex UI and MCP dependency metadata. Claude Code loads the skill from `SKILL.md`; if Claude Code does not use `agents/openai.yaml`, configure the `crypto-skill-hub` MCP server separately in Claude Code.
+`SKILL.md` is the entry point; the `reference/` directory holds the output report templates the skill loads on demand (overview, macro, scanner, comparison, attribution). Both hosts load the skill from `SKILL.md`; configure the `crypto-skill-hub` MCP server separately in the host so the `find_skill` and `execute_skill` tools are available.
 
 ## Codex Skill Installer
 
@@ -81,7 +86,7 @@ Steps:
 4. If you are running as Codex, install to `${CODEX_HOME:-$HOME/.codex}/skills/cmc-crypto-skill-hub/`.
 5. If you are running as Claude Code, install to `$HOME/.claude/skills/cmc-crypto-skill-hub/`.
 6. If both `$HOME/.codex` and `$HOME/.claude` exist, install to both locations.
-7. Copy only the contents of `cmc-crypto-skill-hub/`, preserving the `agents/` subdirectory.
+7. Copy only the contents of `cmc-crypto-skill-hub/`, preserving the `reference/` subdirectory.
 8. If an existing `cmc-crypto-skill-hub` folder is present, move it to a timestamped backup before installing.
 9. Do not install the repository root as the skill.
 10. After installation, report the installed path or paths and remind me to restart the host agent so it can load the guide.
@@ -101,9 +106,7 @@ if [ -e "$install_dir" ]; then
   mv "$install_dir" "${install_dir}.bak.$(date +%Y%m%d%H%M%S)"
 fi
 mkdir -p "$install_dir"
-cp "$tmp_dir/cmc-crypto-skill-hub/SKILL.md" "$install_dir/SKILL.md"
-mkdir -p "$install_dir/agents"
-cp "$tmp_dir/cmc-crypto-skill-hub/agents/openai.yaml" "$install_dir/agents/openai.yaml"
+cp -R "$tmp_dir/cmc-crypto-skill-hub/." "$install_dir/"
 ```
 
 For Claude Code:
@@ -116,7 +119,5 @@ if [ -e "$install_dir" ]; then
   mv "$install_dir" "${install_dir}.bak.$(date +%Y%m%d%H%M%S)"
 fi
 mkdir -p "$install_dir"
-cp "$tmp_dir/cmc-crypto-skill-hub/SKILL.md" "$install_dir/SKILL.md"
-mkdir -p "$install_dir/agents"
-cp "$tmp_dir/cmc-crypto-skill-hub/agents/openai.yaml" "$install_dir/agents/openai.yaml"
+cp -R "$tmp_dir/cmc-crypto-skill-hub/." "$install_dir/"
 ```
