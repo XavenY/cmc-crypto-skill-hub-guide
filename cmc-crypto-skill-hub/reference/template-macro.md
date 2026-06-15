@@ -2,6 +2,7 @@
 
 Applies to `unique_name`: `crypto_macro_overview`, `macro_liquidity_monitor`, `macro_financial_conditions`, `macro_news_aggregator`, `detect_market_regime`, `decode_macro_event_impact`.
 Render only from the parsed `execute_skill` response.
+Language: the service returns English text; write the narrative (TL;DR, anomaly/bullet text, Details prose, takeaway) in the user's language. Keep numbers, tickers, chain/venue names, status/confidence strings, IDs, and the fixed labels verbatim. The skeleton below is a structure guide, not English output to copy.
 
 ## What these services return
 

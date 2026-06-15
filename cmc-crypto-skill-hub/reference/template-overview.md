@@ -2,6 +2,7 @@
 
 Applies to `unique_name`: `daily_market_overview` (incl. `_debug`, `_v*` variants).
 Render only from the parsed `execute_skill` response. Field notes below are for mapping.
+Language: the service returns English text; write the narrative (TL;DR, anomaly/bullet text, Details prose, takeaway) in the user's language. Keep numbers, tickers, chain/venue names, status/confidence strings, IDs, and the fixed labels verbatim. The skeleton below is a structure guide, not English output to copy.
 
 ## What this service returns
 

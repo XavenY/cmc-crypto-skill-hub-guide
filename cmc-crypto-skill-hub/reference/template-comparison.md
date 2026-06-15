@@ -2,6 +2,7 @@
 
 Applies to: trading-cost comparison services (`resultType: comparison_pack`) — e.g. `compare_cex_vs_dex_true_cost`, `compare_order_route_true_cost_cex_dex`, `compare_cross_venue_true_cost`, `compare_fee_tier_effective_cost`, `model_fee_tier_trade_cost`. Match by purpose, not just these names.
 Render only from the parsed `execute_skill` response.
+Language: the service returns English text; write the narrative (TL;DR, anomaly/bullet text, Details prose, takeaway) in the user's language. Keep numbers, tickers, chain/venue names, status/confidence strings, IDs, and the fixed labels verbatim. The skeleton below is a structure guide, not English output to copy.
 
 ## What these services return
 

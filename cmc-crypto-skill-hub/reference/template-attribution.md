@@ -2,6 +2,7 @@
 
 Applies to: portfolio decomposition services — PnL attribution (`resultType: attribution_pack`, e.g. `attribute_portfolio_pnl_drivers`, `rank_portfolio_pnl_driver_buckets`) and exposure/concentration maps (`evidence_pack`, e.g. `analyze_portfolio_exposure_map`, `map_portfolio_concentration_buckets`, `portfolio_analysis`, `review_options_portfolio_greeks`). Match by purpose, not just these names.
 Render only from the parsed `execute_skill` response. **Field paths vary** — the fields below may sit at the top level or under `report.`; map by meaning, omit anything absent.
+Language: the service returns English text; write the narrative (TL;DR, anomaly/bullet text, Details prose, takeaway) in the user's language. Keep numbers, tickers, chain/venue names, status/confidence strings, IDs, and the fixed labels verbatim. The skeleton below is a structure guide, not English output to copy.
 
 ## What these services return
 

@@ -56,7 +56,20 @@ Before rendering, normalize the tool response:
 
 - If it is wrapped as `{"raw_output": "...escaped JSON string..."}`, unescape and parse the inner JSON. Repeat if it is wrapped again.
 - If parsing fails, state the parse error. Do not summarize the wrapper as if it were the result.
-- Preserve numbers, status strings, warnings, risk flags, timestamps, confidence, and skill ids exactly when used as evidence.
+- Keep numbers, tickers, chain/venue names, status strings, risk flags, timestamps, confidence, skill ids, and `unique_name` verbatim. Narrative text (conclusions, warnings, descriptions) is not copied through in the service's language — it is rendered in the user's language per the Language section below.
+
+## Language
+
+The CMC Crypto Skill Hub services return their text (conclusions, narratives, anomaly and risk descriptions, takeaways) in English. **This is source evidence, not the output language.** Render the final answer in the language of the user's most recent message — translate the English prose into that language rather than passing it through. A Chinese request gets a Chinese answer, a Japanese request a Japanese answer, and so on. If the user mixes languages or writes in English, follow the user.
+
+Keep verbatim, regardless of output language:
+
+- all numbers, percentages, and currency amounts;
+- tickers and token names (BTC, ETH, VELVET, …), chain and venue names;
+- `status`, `confidence`, `error_code`, timestamps, `skill_id`, `unique_name`;
+- the fixed section labels (`**TL;DR**`, `🚨 **Notable anomalies:**`, `📰 **Macro News:**`, `**Details**`, `💡 **Takeaway:**`) — these stay in English in every language.
+
+Everything else — every sentence, bullet description, and Details body that came back in English — is written in the user's language. Do not produce a mostly-English answer for a non-English request.
 
 ## Error and status handling
 
@@ -120,7 +133,9 @@ Sentence 3 — the 1-2 key numbers behind it.
 
 Append `· skill_id` to the footer when present. Use `n/a` for missing footer values; never invent timestamp, status, confidence, or skill id.
 
-Fixed section labels — do not translate: `**TL;DR**`, `🚨 **Notable anomalies:**`, `📰 **Macro News:**`, `**Details**`, `💡 **Takeaway:**`. Include `📰 **Macro News:**` only when the response or allowed external sources carry macro news or key events. The divider must be exactly `———`, not `---`. For blocked responses omit `———` and Details. Group Details by the response's natural topics; do not force a fixed taxonomy.
+Start the answer directly with `**TL;DR**` — no preamble, acknowledgement, or process line (for example "data received, rendering the report…"). The only horizontal divider is the single `———` between TL;DR and Details; never emit `---` or `***` anywhere, including before the report.
+
+Fixed section labels — do not translate: `**TL;DR**`, `🚨 **Notable anomalies:**`, `📰 **Macro News:**`, `**Details**`, `💡 **Takeaway:**`. Include `📰 **Macro News:**` only when the response or allowed external sources carry macro news or key events. For blocked responses omit `———` and Details. Group Details by the response's natural topics; do not force a fixed taxonomy.
 
 ## Self-check before answering
 
@@ -128,11 +143,13 @@ Always verify:
 
 - the response was parsed (no `raw_output` string shown as the result);
 - no table, no HTML, no raw wrapper, no tool trace;
-- the answer matches the user's language;
+- the answer starts directly at `**TL;DR**` with no preamble, and contains no `---` or `***` — only the single `———`;
+- identifiers keep literal underscores (`price_change_4h`), not backslash-escaped (`price\_change\_4h`);
+- the narrative is in the user's language — the English prose from the service was translated, not copied through; only numbers, tickers, IDs, status/confidence strings, and the fixed labels stay verbatim;
 - the footer is present with real values or `n/a`.
 
 If you used the Standard Report Format, also verify exactly one `**TL;DR**`, one `———`, and one `**Details**` for non-blocked reports, with `🚨 **Notable anomalies:**` and at least one `💡 **Takeaway:**`. If you used a matched template, verify its own "Minimum" checklist instead.
 
 ## Spacing
 
-One blank line between distinct blocks. Exactly one `———` between TL;DR and Details, nowhere else. Bullet marker is `-`; one bullet per line.
+One blank line between distinct blocks. Exactly one `———` between TL;DR and Details, nowhere else. Bullet marker is `-`; one bullet per line. Write underscores in identifiers and field names literally — do not backslash-escape them (`price_change_4h` and `skill_id`, never `price\_change\_4h`).

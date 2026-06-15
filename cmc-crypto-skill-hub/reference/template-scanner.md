@@ -2,6 +2,7 @@
 
 Applies to: discovery scans / ranked candidate queues — e.g. `onchain_token_scanner`, `altcoin_breakout_scanner_spot`, `altcoin_scanner_perp`, and other `rank_*` / `screen_*` scans. Match by purpose, not just these names.
 Render only from the parsed `execute_skill` response. Field paths and names vary by service; map by meaning and omit anything absent.
+Language: the service returns English text; write the narrative (TL;DR, anomaly/bullet text, Details prose, takeaway) in the user's language. Keep numbers, tickers, chain/venue names, status/confidence strings, IDs, and the fixed labels verbatim. The skeleton below is a structure guide, not English output to copy.
 
 ## What these services return
 
